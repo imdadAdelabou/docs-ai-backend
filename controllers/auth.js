@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { getDefaultPricing } from "../utils/functions.js";
 
 async function signUp(req, res) {
   try {
@@ -11,7 +12,8 @@ async function signUp(req, res) {
     let isNewUser = false;
 
     if (!user) {
-      user = new User({ name, email, photoUrl, provider });
+      const pricing = await getDefaultPricing();
+      user = new User({ name, email, photoUrl, provider, pricing });
       user = await user.save();
       isNewUser = true;
     }
@@ -34,11 +36,13 @@ async function registerWithEmailAndPassword(req, res) {
     }
     const salt = await bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
     const hashedPassword = await bcrypt.hash(password, salt);
+    const pricing = await getDefaultPricing();
     user = new User({
       email,
       password: hashedPassword,
       name,
       provider: "EMAIL/PASSWORD",
+      pricing,
     });
     user = await user.save();
 
