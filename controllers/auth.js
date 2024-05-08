@@ -85,7 +85,7 @@ async function me(req, res) {
   try {
     const userId = req.userId;
     const token = req.token;
-    const user = await User.findById(userId.id);
+    const user = await User.findById(userId.id).populate("pricing");
 
     return res.status(200).json({ message: "Success", user, token });
   } catch (e) {
