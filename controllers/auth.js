@@ -8,7 +8,7 @@ async function signUp(req, res) {
     //TODO: implement validation on user input
     const { email, name, photoUrl, provider } = req.body;
     console.log(provider);
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email }).populate("pricing");
     let isNewUser = false;
 
     if (!user) {
@@ -58,7 +58,7 @@ async function loginWithEmailAndPassword(req, res) {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("pricing");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
