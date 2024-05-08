@@ -6,6 +6,11 @@ const userSchema = mongoose.Schema({
   photoUrl: { type: String, required: false, trim: true },
   password: { type: String, required: false, trim: true },
   provider: { type: String, required: true, trim: true },
+  pricing: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Pricing",
+    required: true,
+  },
 });
 
 const User = mongoose.model("User", userSchema);
