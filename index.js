@@ -12,6 +12,7 @@ import documentRouter from "./routers/document.route.js";
 import { updateDocument } from "./controllers/document.js";
 import userRouter from "./routers/user.route.js";
 import openaiRouter from "./routers/openai.route.js";
+import pricingRouter from "./routers/pricing.route.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -26,6 +27,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 app.use("/api", authRouter);
 app.use("/api", documentRouter);
 app.use("/api/user", auth, userRouter);
+app.use("/api/pricing", pricingRouter);
 app.use("/api/openai", openaiRouter);
 
 mongoose
