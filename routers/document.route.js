@@ -5,6 +5,7 @@ import {
   getDocById,
   me,
   updateTitle,
+  updateContent,
 } from "../controllers/document.js";
 
 const documentRouter = Router();
@@ -12,6 +13,7 @@ const documentRouter = Router();
 documentRouter.post("/doc/create", auth, create);
 documentRouter.get("/doc/me", auth, me);
 documentRouter.put("/doc/title", auth, updateTitle);
+documentRouter.put("/doc/content", auth, updateContent);
 documentRouter.get("/doc/:id", auth, getDocById);
 
 export default documentRouter;

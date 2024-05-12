@@ -36,8 +36,22 @@ async function me(req, res) {
 
 async function updateTitle(req, res) {
   try {
-    const { id, title, content } = req.body;
-    const document = await Document.findByIdAndUpdate(id, { title, content });
+    const { id, title } = req.body;
+    const document = await Document.findByIdAndUpdate(id, { title });
+    if (!document) {
+      return res.status(404).json({ message: "No document found" });
+    }
+
+    return res.status(200).json({ message: "Success", document });
+  } catch (e) {
+    return res.status(500).json({ message: "Internal Server", error: e });
+  }
+}
+
+async function updateContent(req, res) {
+  try {
+    const { id, content } = req.body;
+    const document = await Document.findByIdAndUpdate(id, { content });
     if (!document) {
       return res.status(404).json({ message: "No document found" });
     }
@@ -80,4 +94,4 @@ async function updateDocument(data) {
   }
 }
 
-export { create, me, updateTitle, getDocById, updateDocument };
+export { create, me, updateTitle, getDocById, updateDocument, updateContent };
