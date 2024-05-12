@@ -36,8 +36,8 @@ async function me(req, res) {
 
 async function updateTitle(req, res) {
   try {
-    const { id, title } = req.body;
-    const document = await Document.findByIdAndUpdate(id, { title });
+    const { id, title, content } = req.body;
+    const document = await Document.findByIdAndUpdate(id, { title, content });
     if (!document) {
       return res.status(404).json({ message: "No document found" });
     }
