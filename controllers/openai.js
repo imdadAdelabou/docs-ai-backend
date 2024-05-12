@@ -46,13 +46,14 @@ async function generate_image(req, res) {
       size: "1024x1024",
       quality: "standard",
     });
-
+    console.log(response);
     if (!response.data.url) {
       return res.status(500).json({ message: "Failed to generate image" });
     }
 
     return res.status(200).json({ data: response.data.url });
   } catch (e) {
+    console.log(e);
     return res.status(500).send(e);
   }
 }
