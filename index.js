@@ -3,7 +3,7 @@ config();
 import express from "express";
 
 import http from "http";
-import socket from "socket.io";
+import { Server } from "socket.io";
 import cors from "cors";
 import mongoose from "mongoose";
 import auth from "./middlewares/auth.midldleware.js";
@@ -13,10 +13,11 @@ import { updateDocument } from "./controllers/document.js";
 import userRouter from "./routers/user.route.js";
 import openaiRouter from "./routers/openai.route.js";
 import pricingRouter from "./routers/pricing.route.js";
+import aiRouter from "./routers/ai.route.js";
 
 const app = express();
 const httpServer = http.createServer(app);
-const socketConfig = socket(httpServer);
+const socketConfig = new Server(httpServer);
 
 app.use(cors());
 app.use(express.json());
@@ -29,6 +30,7 @@ app.use("/api", documentRouter);
 app.use("/api/user", auth, userRouter);
 app.use("/api/pricing", pricingRouter);
 app.use("/api/openai", openaiRouter);
+app.use("/api/ai", aiRouter);
 
 mongoose
   .connect(MONGODB_URI)
